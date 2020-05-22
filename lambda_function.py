@@ -15,7 +15,7 @@ def compress_image(image, path):
     :param path: string, path of target image
     :return: void
     """
-    origin_img_name = image.name.rsplit('.', 1)[0]
+    origin_img_name, extension = image.name.rsplit('.', 1)
     img = Image.open(image)
 
     if img.mode != 'RGB':
@@ -23,8 +23,8 @@ def compress_image(image, path):
 
     img.thumbnail(MAX_SIZE, Image.ANTIALIAS)
     output = BytesIO()
-    img.save(output, format='JPEG', quality=100)
-    s3_client.put_object(Bucket=BUCKET_NAME, Key=f'{path}/{image.name}', Body=output, ContentType='image/jpg')
+    img.save(output, format=extension, quality=100)
+    s3_client.put_object(Bucket=BUCKET_NAME, Key=f'{path}/{origin_img_name}.{extension}', Body=output)
 
     for prefix, size in ('xs', (100, 100)), ('sm', (200, 200)), ('md', (400, 400)), ('lg', (800, 800)):
         img = Image.open(image)
@@ -34,7 +34,7 @@ def compress_image(image, path):
 
         img.thumbnail(size, Image.ANTIALIAS)
         output = BytesIO()
-        img.save(output, format='JPEG', quality=100)
+        img.save(output, format=extension, quality=100)
 
-        img_name = f'{prefix}_{origin_img_name}.jpg'
-        s3_client.put_object(Bucket=BUCKET_NAME, Key=f'{path}/{img_name}', Body=output, ContentType='image/jpg')
+        img_name = f'{prefix}_{origin_img_name}.{extension}'
+        s3_client.put_object(Bucket=BUCKET_NAME, Key=f'{path}/{img_name}', Body=output)
