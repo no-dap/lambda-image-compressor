@@ -15,6 +15,8 @@ BUCKET_NAME = 'TODO'
 
 3. Create AWS IAM role and grant lambda execute, s3 access privileges.  
 
+4. Zip whole project, update to lambda console
+
 ## How to run
 ```python
 import boto3
