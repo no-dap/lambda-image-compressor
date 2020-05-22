@@ -8,13 +8,18 @@ BUCKET_NAME = 'TODO'
 s3_client = boto3.client('s3', region_name='ap-northeast-2')
 
 
-def compress_image(image, path):
+def compress_image(payloads):
     """
     Create compressed image from origin && save to S3
-    :param image: file
-    :param path: string, path of target image
+    :param payloads: dict
+    {
+        "image": byte string,
+        "path": string, path of target image
+    }
     :return: void
     """
+    image = payloads.get('image')
+    path = payloads.get('path')
     origin_img_name, extension = image.name.rsplit('.', 1)
     img = Image.open(image)
 
