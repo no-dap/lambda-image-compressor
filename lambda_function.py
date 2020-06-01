@@ -1,12 +1,12 @@
-import os
 from io import BytesIO
 
 from libs import boto3
 from libs.PIL import Image
 
 MAX_SIZE = (1080, 810)
-BUCKET_NAME = 'TODO'
-s3_client = boto3.client('s3', region_name='ap-northeast-2')
+BUCKET_NAME = os.getenv("BUCKET_NAME", "TODO")
+AWS_REGION = os.getenv("AWS_REGION", "ap-northeast-2")
+s3_client = boto3.client('s3', region_name=AWS_REGION)
 
 
 def lambda_handler(payloads, context):
