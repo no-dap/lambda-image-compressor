@@ -1,3 +1,4 @@
+import base64
 import json
 import os
 from io import BytesIO
@@ -37,7 +38,7 @@ def lambda_handler(payloads, context):
     }
     :return: void
     """
-    _image = bytes(payloads.get('image'), encoding='utf8')
+    _image = base64.b64decode(bytes(payloads.get('image'), encoding='utf8'))
     _path = payloads.get('path')
     _name = payloads.get('name')
     _origin_img_name, _extension = _name.rsplit('.', 1)
