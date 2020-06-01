@@ -1,3 +1,4 @@
+import os
 from io import BytesIO
 
 from libs import boto3
@@ -8,7 +9,7 @@ BUCKET_NAME = 'TODO'
 s3_client = boto3.client('s3', region_name='ap-northeast-2')
 
 
-def compress_image(payloads):
+def lambda_handler(payloads, context):
     """
     Create compressed image from origin && save to S3
     :param payloads: dict
