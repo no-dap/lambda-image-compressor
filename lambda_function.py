@@ -37,9 +37,7 @@ def lambda_handler(payloads, context):
     }
     :return: void
     """
-    payloads = json.loads(payloads)
-
-    _image = payloads.get('image').encode()
+    _image = payloads.get('image').encode('base64')
     _path = payloads.get('path')
     _name = payloads.get('name')
     _origin_img_name, _extension = _name.rsplit('.', 1)
