@@ -42,7 +42,7 @@ def lambda_handler(payloads, context):
     _path = payloads.get('path')
     _name = payloads.get('name')
     _origin_img_name, _extension = _name.rsplit('.', 1)
-    _post_to_s3(_image, MAX_SIZE, _path, _name, _extension)
+    _post_to_s3(_image, MAX_SIZE, _path, _origin_img_name, _extension)
 
     for prefix, size in ('xs', (100, 100)), ('sm', (200, 200)), ('md', (400, 400)), ('lg', (800, 800)):
         _name = f'{prefix}_{_origin_img_name}'
